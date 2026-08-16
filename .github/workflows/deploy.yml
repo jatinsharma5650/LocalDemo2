@@ -42,7 +42,7 @@ jobs:
             password: ${{ secrets.DOCKER_PASSWORD }}
 
         # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest .
-        # Following is just used for versioning, so rollback would be easy if there is any problem.
+        # Following with github.sha is just used for versioning, so rollback would be easy if there is any problem.
         - name: Building Docker Image
           run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
 
