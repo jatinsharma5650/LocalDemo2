@@ -43,11 +43,13 @@ jobs:
 
         # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest .
         # Following with github.sha is just used for versioning, so rollback would be easy if there is any problem.
+        # docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+        # docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }} --all-tags
+        
         - name: Building Docker Image
-          run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
-
+          run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest .
         - name: Push Image to DockerHub
-          run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }} --all-tags
+          run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
         # - name: Deploy to EC2
         #   uses: appleboy/ssh-action@v1.2.0
